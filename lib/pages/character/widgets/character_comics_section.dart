@@ -4,10 +4,10 @@ import 'package:marvel_heroes/models/comics.dart';
 import 'package:marvel_heroes/models/marvel.dart';
 import 'package:marvel_heroes/services/marvel_service.dart';
 import 'package:marvel_heroes/shared/comic_list_item.dart';
+import 'package:provider/provider.dart';
 
 class CharacterComicsSection extends StatelessWidget {
   final Character character;
-  final MarvelService service = MarvelService(); // TODO - store in provider
 
   CharacterComicsSection({
     @required this.character,
@@ -15,6 +15,7 @@ class CharacterComicsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final service = Provider.of<MarvelService>(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

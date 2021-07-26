@@ -20,49 +20,39 @@ class InitialiserWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData.dark().copyWith(accentColor: Colors.red),
-      home: FutureBuilder(
-        future: _init(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            return ProviderWrapper(
-              localStorageService: snapshot.data,
-            );
-          }
-          return CircularProgressIndicator();
-        },
-      ),
-    );
-  }
-}
-
-class ProviderWrapper extends StatelessWidget {
-  final LocalStorageService localStorageService;
-
-  ProviderWrapper({
-    this.localStorageService,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final HttpService http = HttpService();
-    final UserState userState = UserState(
-      localStorageService: localStorageService,
-    );
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider<UserState>(
-          create: (BuildContext context) => userState,
-        ),
-        Provider<MarvelService>(
-          create: (BuildContext context) => MarvelService(
-            http: http,
-          ),
-        ),
-      ],
-      child: CharactersListPage(),
+    return FutureBuilder(
+      future: _init(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          final HttpService http = HttpService();
+          final UserState userState = UserState(
+            localStorageService: snapshot.data,
+          );
+          return MultiProvider(
+            providers: [
+              ChangeNotifierProvider<UserState>(
+                create: (BuildContext context) => userState,
+              ),
+              Provider<MarvelService>(
+                create: (BuildContext context) => MarvelService(
+                  http: http,
+                ),
+              ),
+            ],
+            child: MaterialApp(
+              debugShowCheckedModeBanner: false,
+              theme: ThemeData.dark().copyWith(
+                accentColor: Colors.red,
+                appBarTheme: AppBarTheme(
+                  backgroundColor: Colors.red,
+                ),
+              ),
+              home: CharactersListPage(),
+            ),
+          );
+        }
+        return Image.asset("marvel.png");
+      },
     );
   }
 }

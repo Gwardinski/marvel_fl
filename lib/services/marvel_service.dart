@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
+import 'package:flutter/material.dart';
 import 'package:marvel_heroes/models/character.dart';
 import 'package:marvel_heroes/models/comics.dart';
 import 'package:marvel_heroes/models/marvel.dart';
@@ -13,7 +14,7 @@ class MarvelService {
   final HttpService http;
 
   MarvelService({
-    this.http,
+    @required this.http,
   });
 
   Future<MarvelReponseData<Character>> getCharacters() async {

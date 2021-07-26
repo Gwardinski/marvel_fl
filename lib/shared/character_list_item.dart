@@ -9,8 +9,8 @@ class CharacterListItem extends StatelessWidget {
 
   final Character character;
 
-  void _navigateToCharacterPage(context) {
-    Navigator.of(context).push(
+  Future<void> _navigateToCharacterPage(context) {
+    return Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => CharacterPage(
           character: character,

@@ -3,19 +3,9 @@ import 'package:marvel_heroes/models/character.dart';
 import 'package:marvel_heroes/models/marvel.dart';
 import 'package:marvel_heroes/shared/character_list_item.dart';
 import 'package:marvel_heroes/services/marvel_service.dart';
+import 'package:provider/provider.dart';
 
-class CharactersListPage extends StatefulWidget {
-  CharactersListPage({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  _CharactersListPageState createState() => _CharactersListPageState();
-}
-
-class _CharactersListPageState extends State<CharactersListPage> {
-  MarvelService service = MarvelService();
-
+class CharactersListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +13,7 @@ class _CharactersListPageState extends State<CharactersListPage> {
         title: Text("Marvel Heroes"),
       ),
       body: FutureBuilder<MarvelReponseData<Character>>(
-        future: service.getCharacters(),
+        future: Provider.of<MarvelService>(context).getCharacters(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
@@ -34,16 +24,21 @@ class _CharactersListPageState extends State<CharactersListPage> {
           if (snapshot.hasError) {
             return Center(child: Text("Failed to load characters."));
           }
-          return SingleChildScrollView(
-            child: ListView.builder(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: snapshot.data.results.length,
-              itemBuilder: (context, i) {
-                return CharacterListItem(character: snapshot.data.results[i]);
-              },
-            ),
-          );
+          if (snapshot.hasData) {
+            return SingleChildScrollView(
+              child: ListView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: snapshot.data.results.length,
+                itemBuilder: (context, i) {
+                  return CharacterListItem(
+                    character: snapshot.data.results[i],
+                  );
+                },
+              ),
+            );
+          }
+          return Container();
         },
       ),
     );

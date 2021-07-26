@@ -26,7 +26,7 @@ class UserState extends ChangeNotifier {
 
   void updateSavedComics(Comic comic) {
     try {
-      localStorageService.saveComic(comic);
+      // localStorageService.saveComic(comic);
     } catch (error) {
       print(error);
     } finally {

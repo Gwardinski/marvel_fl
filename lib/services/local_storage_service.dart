@@ -10,23 +10,23 @@ class LocalStorageService {
     _preferences = await SharedPreferences.getInstance();
   }
 
-  void saveComic(Comic comic) {
-    try {
-      _preferences.setString(comic.id.toString(), jsonEncode(comic));
-    } catch (error) {
-      throw Exception(error.toString());
-    }
-  }
+  // void saveComic(Comic comic) {
+  //   try {
+  //     _preferences.setString(comic.id.toString(), jsonEncode(comic));
+  //   } catch (error) {
+  //     throw Exception(error.toString());
+  //   }
+  // }
 
-  dynamic getComic(Comic comic) {
-    try {
-      final value = _preferences.get(comic.id.toString());
-      Comic.fromJson(value);
-      return value;
-    } catch (error) {
-      throw Exception(error.toString());
-    }
-  }
+  // dynamic getComic(Comic comic) {
+  //   try {
+  //     final value = _preferences.get(comic.id.toString());
+  //     Comic.fromJson(value);
+  //     return value;
+  //   } catch (error) {
+  //     throw Exception(error.toString());
+  //   }
+  // }
 
   dynamic getComics() {
     // try {
