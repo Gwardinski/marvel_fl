@@ -2,32 +2,20 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
+const _headers = {
+  "Accept": "application/json",
+  "content-type": "application/json",
+};
+
 class HttpService {
-  Future<ServiceResponse> get(
-    Uri uri, {
-    Map<String, String> headers,
-  }) async {
-    final response = await http.get(
-      uri,
-    );
-    print(response);
+  Future<dynamic> get(String url) async {
+    final res = await http.get(Uri.parse(url), headers: _headers);
+    return _handleResponse(res);
   }
 
-  Map<String, String> _getHeaders() {
-    return {
-      "Accept": "application/json",
-      "content-type": "application/json",
-    };
-  }
-
-  ServiceResponse _handleResponse(http.Response response) {
-    if (response.statusCode >= 200 || response.statusCode < 300) {
-      if (response.body != null && response.body.length > 0) {
-        return ServiceResponse.fromJson(
-          jsonDecode(response.body),
-        );
-      }
-      return ServiceResponse.fromJson("");
+  dynamic _handleResponse(http.Response response) {
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
     } else {
       switch (response.statusCode) {
         case 400:
@@ -46,14 +34,6 @@ class HttpService {
           throw UnknownException(response);
       }
     }
-  }
-}
-
-class ServiceResponse {
-  dynamic data;
-
-  ServiceResponse.fromJson(json) {
-    data = json;
   }
 }
 
