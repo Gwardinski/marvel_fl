@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:marvel_heroes/models/character.dart';
 
@@ -15,9 +17,12 @@ class CharacterBioSection extends StatelessWidget {
       children: [
         Hero(
           tag: "thumnail${character.id}",
-          child: Image.network(
-            character.thumbnail,
-            width: double.infinity,
+          child: Container(
+            constraints: BoxConstraints(maxHeight: 400),
+            child: Image.network(
+              character.thumbnail,
+              width: double.infinity,
+            ),
           ),
         ),
         Container(
@@ -32,8 +37,11 @@ class CharacterBioSection extends StatelessWidget {
         ),
         character.description != ""
             ? Container(
-                padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
-                child: Text(character.description),
+                padding: EdgeInsets.fromLTRB(16, 0, 16, 32),
+                child: Text(
+                  character.description,
+                  style: TextStyle(fontSize: 16),
+                ),
               )
             : Container(),
       ],

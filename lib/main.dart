@@ -11,6 +11,8 @@ void main() {
   runApp(InitialiserWidget());
 }
 
+const Color MarvelRed = Color.fromRGBO(230, 36, 41, 1);
+
 class InitialiserWidget extends StatelessWidget {
   _init() async {
     final localStorageService = LocalStorageService();
@@ -44,8 +46,9 @@ class InitialiserWidget extends StatelessWidget {
               theme: ThemeData.dark().copyWith(
                 accentColor: Colors.red,
                 appBarTheme: AppBarTheme(
-                  backgroundColor: Colors.red,
+                  backgroundColor: MarvelRed,
                 ),
+                primaryColor: MarvelRed,
               ),
               home: CharactersListPage(),
             ),

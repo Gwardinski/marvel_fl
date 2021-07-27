@@ -6,9 +6,9 @@ import 'package:marvel_heroes/models/comics.dart';
 import 'package:marvel_heroes/models/marvel.dart';
 import 'package:marvel_heroes/services/http.dart';
 
-String apikey = "1b0b4dfb2dbba8cc9c126b03b6f513d6";
-String privateKey = "0a8f1d288fb11cf93bb586ee98b094e5cece4b5c";
-String baseurl = "http://gateway.marvel.com/v1/public";
+const String apikey = "1b0b4dfb2dbba8cc9c126b03b6f513d6";
+const String privateKey = "0a8f1d288fb11cf93bb586ee98b094e5cece4b5c";
+const String baseurl = "http://gateway.marvel.com/v1/public";
 
 class MarvelService {
   final HttpService http;
@@ -17,8 +17,8 @@ class MarvelService {
     @required this.http,
   });
 
-  Future<MarvelReponseData<Character>> getCharacters() async {
-    final url = "$baseurl/characters?${_appendUrl()}";
+  Future<MarvelReponseData<Character>> getCharacters(int offset) async {
+    final url = "$baseurl/characters?offset=${offset.toString()}&${_appendUrl()}";
     try {
       dynamic resBody = await http.get(url);
       return MarvelReponseData<Character>.fromJson(

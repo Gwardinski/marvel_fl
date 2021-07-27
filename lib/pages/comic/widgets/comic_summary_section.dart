@@ -32,14 +32,20 @@ class ComicSummarySection extends StatelessWidget {
         ),
         comic.description != null && comic.description != ""
             ? Container(
-                padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
-                child: Text(comic.description),
+                padding: EdgeInsets.fromLTRB(16, 0, 16, 32),
+                child: Text(
+                  comic.description,
+                  style: TextStyle(fontSize: 16),
+                ),
               )
             : Container(),
         comic.variantDescription != null && comic.variantDescription != ""
             ? Container(
-                padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
-                child: Text(comic.variantDescription),
+                padding: EdgeInsets.fromLTRB(16, 0, 16, 32),
+                child: Text(
+                  comic.variantDescription,
+                  style: TextStyle(fontSize: 16),
+                ),
               )
             : Container(),
       ],

@@ -23,7 +23,7 @@ class ResourcesSection extends StatelessWidget {
     return Column(
       children: [
         Text(
-          "Online Resources:",
+          "Online Resources",
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
@@ -41,7 +41,7 @@ class ResourcesSection extends StatelessWidget {
                         r.name ?? "",
                         style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                       ),
-                      backgroundColor: Colors.red, // TODO
+                      backgroundColor: Theme.of(context).primaryColor,
                     ),
                   ),
                 ),
