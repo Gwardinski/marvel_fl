@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:marvel_heroes/models/comics.dart';
 
@@ -13,11 +14,21 @@ class ComicSummarySection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Hero(
-          tag: "thumnail${comic.id}",
-          child: Image.network(
-            comic.thumbnail,
-            height: 400,
+        CachedNetworkImage(
+          imageUrl: comic.thumbnail,
+          placeholder: (c, s) => Center(child: CircularProgressIndicator()),
+          errorWidget: (c, s, d) => Container(),
+          imageBuilder: (context, imageProvider) => Hero(
+            tag: "thumbnail${comic.id}",
+            child: Container(
+              height: 400,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: imageProvider,
+                  fit: BoxFit.fitHeight,
+                ),
+              ),
+            ),
           ),
         ),
         Container(

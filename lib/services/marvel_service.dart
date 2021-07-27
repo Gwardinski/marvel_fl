@@ -6,8 +6,10 @@ import 'package:marvel_heroes/models/comics.dart';
 import 'package:marvel_heroes/models/marvel.dart';
 import 'package:marvel_heroes/services/http.dart';
 
+// TODO secrets should be secret
 const String apikey = "1b0b4dfb2dbba8cc9c126b03b6f513d6";
 const String privateKey = "0a8f1d288fb11cf93bb586ee98b094e5cece4b5c";
+
 const String baseurl = "http://gateway.marvel.com/v1/public";
 
 class MarvelService {
@@ -19,41 +21,58 @@ class MarvelService {
 
   Future<MarvelReponseData<Character>> getCharacters(int offset) async {
     final url = "$baseurl/characters?offset=${offset.toString()}&${_appendUrl()}";
+    var res = MarvelReponseData<Character>();
     try {
       dynamic resBody = await http.get(url);
-      return MarvelReponseData<Character>.fromJson(
-        resBody['data'],
-      );
+      if (resBody != null) {
+        return MarvelReponseData<Character>.fromApi(
+          resBody['data'],
+        );
+      }
+    } on OfflineException {
+      // TODO add checks for further exceptions
+      // use exceptions to update UI with useful information
+      throw OfflineException();
     } catch (e) {
       print(e);
     }
-    return null;
+    return res;
   }
 
-  Future<MarvelReponseData<Comic>> getCharacterComics(int characterId) async {
-    final url = "$baseurl/characters/${characterId.toString()}/comics?${_appendUrl()}";
+  Future<MarvelReponseData<Comic>> getCharacterComics(String characterId) async {
+    final url = "$baseurl/characters/$characterId/comics?${_appendUrl()}";
+    var res = MarvelReponseData<Comic>();
     try {
       dynamic resBody = await http.get(url);
-      return MarvelReponseData<Comic>.fromJson(
-        resBody['data'],
-      );
+      if (resBody != null) {
+        res = MarvelReponseData<Comic>.fromApi(
+          resBody['data'],
+        );
+      }
+    } on OfflineException {
+      throw OfflineException();
     } catch (e) {
       print(e);
     }
-    return null;
+    return res;
   }
 
-  Future<MarvelReponseData<Character>> getComicCharacters(int comicId) async {
-    final url = "$baseurl/comics/${comicId.toString()}/characters?${_appendUrl()}";
+  Future<MarvelReponseData<Character>> getComicCharacters(String comicId) async {
+    final url = "$baseurl/comics/$comicId/characters?${_appendUrl()}";
+    var res = MarvelReponseData<Character>();
     try {
       dynamic resBody = await http.get(url);
-      return MarvelReponseData<Character>.fromJson(
-        resBody['data'],
-      );
+      if (resBody != null) {
+        res = MarvelReponseData<Character>.fromApi(
+          resBody['data'],
+        );
+      }
+    } on OfflineException {
+      throw OfflineException();
     } catch (e) {
       print(e);
     }
-    return null;
+    return res;
   }
 
   String _appendUrl() {

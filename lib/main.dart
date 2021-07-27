@@ -3,7 +3,7 @@ import 'package:marvel_heroes/pages/characters/characters_page.dart';
 import 'package:marvel_heroes/services/http.dart';
 import 'package:marvel_heroes/services/local_storage_service.dart';
 import 'package:marvel_heroes/services/marvel_service.dart';
-import 'package:marvel_heroes/services/user_state.dart';
+import 'package:marvel_heroes/services/comic_state.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -27,13 +27,13 @@ class InitialiserWidget extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           final HttpService http = HttpService();
-          final UserState userState = UserState(
+          final ComicState comicState = ComicState(
             localStorageService: snapshot.data,
           );
           return MultiProvider(
             providers: [
-              ChangeNotifierProvider<UserState>(
-                create: (BuildContext context) => userState,
+              ChangeNotifierProvider<ComicState>(
+                create: (BuildContext context) => comicState,
               ),
               Provider<MarvelService>(
                 create: (BuildContext context) => MarvelService(
@@ -51,11 +51,29 @@ class InitialiserWidget extends StatelessWidget {
                 primaryColor: MarvelRed,
               ),
               home: CharactersListPage(),
+              // TODO bottom tab bar
+              // tab for characters, tab for ReadingList
+              // give each tab it's own seperate navigation history using navigationKey / create navigationService
             ),
           );
         }
-        return Image.asset("marvel.png");
+        return LoadingImage();
       },
+    );
+  }
+}
+
+class LoadingImage extends StatelessWidget {
+  const LoadingImage({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        body: Image.asset("assets/marvel.png"),
+      ),
     );
   }
 }

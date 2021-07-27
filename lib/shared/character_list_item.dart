@@ -43,7 +43,7 @@ class CharacterListItem extends StatelessWidget {
             Row(
               children: [
                 Hero(
-                  tag: "thumnail${character.id}",
+                  tag: "thumbnail${character.id}",
                   child: Image.network(
                     character.thumbnail,
                     height: 120,

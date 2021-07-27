@@ -10,7 +10,11 @@ class MarvelReponseData<T> {
   int count;
   List<T> results;
 
-  MarvelReponseData.fromJson(json) {
+  MarvelReponseData() {
+    results = [];
+  }
+
+  MarvelReponseData.fromApi(json) {
     this.offset = json['offset'];
     this.limit = json['limit'];
     this.total = json['total'];
@@ -21,10 +25,10 @@ class MarvelReponseData<T> {
       assert(type != null);
       switch (type) {
         case Character:
-          models = Character.listFromJson(json['results']) as List<T>;
+          models = Character.listFromApi(json['results']) as List<T>;
           break;
         case Comic:
-          models = Comic.listFromJson(json['results']) as List<T>;
+          models = Comic.listFromApi(json['results']) as List<T>;
           break;
         default:
           models = [];

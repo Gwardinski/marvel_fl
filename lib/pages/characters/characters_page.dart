@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:marvel_heroes/models/character.dart';
+import 'package:marvel_heroes/pages/reading_list/reading_list_page.dart';
+import 'package:marvel_heroes/services/http.dart';
 import 'package:marvel_heroes/shared/character_list_item.dart';
 import 'package:marvel_heroes/services/marvel_service.dart';
 import 'package:provider/provider.dart';
@@ -26,6 +28,7 @@ class _CharactersListPageState extends State<CharactersListPage> {
   }
 
   Future<void> _fetchPage(int pageKey) async {
+    // TODO add pull to refresh
     try {
       final res = await _service.getCharacters(pageKey);
       final newItems = res.results;
@@ -36,9 +39,23 @@ class _CharactersListPageState extends State<CharactersListPage> {
         final nextPageKey = pageKey + newItems.length;
         _controller.appendPage(newItems, nextPageKey);
       }
+    } on OfflineException {
+      // TODO default message says 'unknown error'
+      // update to specifically mention being offline
+      final snackBar = SnackBar(content: Text('Please go online to continue'));
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      _controller.error = '';
     } catch (error) {
       _controller.error = error;
     }
+  }
+
+  Future<void> _navigateToReadingPage(context) {
+    return Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => ReadingListPage(),
+      ),
+    );
   }
 
   @override
@@ -46,6 +63,13 @@ class _CharactersListPageState extends State<CharactersListPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Marvel Heroes"),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.list),
+            onPressed: () => _navigateToReadingPage(context),
+          )
+        ],
+        // TODO remove after creating bottom tabs
       ),
       body: PagedListView<int, Character>(
         pagingController: _controller,

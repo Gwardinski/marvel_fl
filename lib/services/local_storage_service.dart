@@ -1,6 +1,3 @@
-import 'dart:convert';
-
-import 'package:marvel_heroes/models/comics.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalStorageService {
@@ -10,31 +7,35 @@ class LocalStorageService {
     _preferences = await SharedPreferences.getInstance();
   }
 
-  // void saveComic(Comic comic) {
-  //   try {
-  //     _preferences.setString(comic.id.toString(), jsonEncode(comic));
-  //   } catch (error) {
-  //     throw Exception(error.toString());
-  //   }
-  // }
+  List<String> getIdList(String key) {
+    return _preferences.getStringList(key);
+  }
 
-  // dynamic getComic(Comic comic) {
-  //   try {
-  //     final value = _preferences.get(comic.id.toString());
-  //     Comic.fromJson(value);
-  //     return value;
-  //   } catch (error) {
-  //     throw Exception(error.toString());
-  //   }
-  // }
+  updateList(String key, List<String> list) {
+    _preferences.setStringList(key, list);
+  }
 
-  dynamic getComics() {
-    // try {
-    //   final value = _preferences.get(comic.id.toString());
-    //   Comic.fromJson(value);
-    //   return value;
-    // } catch (error) {
-    //   throw Exception(error.toString());
-    // }
+  Object getObject(String id) {
+    try {
+      return _preferences.get(id.toString());
+    } catch (error) {
+      throw Exception(error.toString());
+    }
+  }
+
+  Future<void> saveObject(String id, String objectString) async {
+    try {
+      await _preferences.setString(id, objectString);
+    } catch (error) {
+      throw Exception(error.toString());
+    }
+  }
+
+  Object removeObject(String id) {
+    try {
+      return _preferences.remove(id.toString());
+    } catch (error) {
+      throw Exception(error.toString());
+    }
   }
 }

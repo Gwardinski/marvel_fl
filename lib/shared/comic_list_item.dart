@@ -9,7 +9,7 @@ class ComicListItem extends StatelessWidget {
 
   final Comic comic;
 
-  void _navigateToComicPage(context) {
+  Future<void> _navigateToComicPage(context) async {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => ComicPage(
@@ -28,7 +28,7 @@ class ComicListItem extends StatelessWidget {
         child: Column(
           children: [
             Hero(
-              tag: "thumnail${comic.id}",
+              tag: "thumbnail${comic.id}",
               child: Image.network(
                 comic.thumbnail,
                 height: 300,

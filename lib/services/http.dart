@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:connectivity_plus/connectivity_plus.dart';
 
 const _headers = {
   "Accept": "application/json",
@@ -8,7 +9,16 @@ const _headers = {
 };
 
 class HttpService {
+  Connectivity connection = Connectivity();
+
   Future<dynamic> get(String url) async {
+    final state = await connection.checkConnectivity();
+    // TODO don't call method each time
+    // create ConnectionService with single instance of Connectivity
+    // put in Provider and listen to its onConnectivityChanged stream
+    if (state == ConnectivityResult.none) {
+      throw OfflineException();
+    }
     final res = await http.get(Uri.parse(url), headers: _headers);
     return _handleResponse(res);
   }
@@ -68,4 +78,8 @@ class Http500Exception extends BaseException {
 
 class UnknownException extends BaseException {
   UnknownException(http.Response response) : super(response.body);
+}
+
+class OfflineException extends BaseException {
+  OfflineException() : super('');
 }

@@ -16,7 +16,7 @@ class CharacterBioSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Hero(
-          tag: "thumnail${character.id}",
+          tag: "thumbnail${character.id}",
           child: Container(
             constraints: BoxConstraints(maxHeight: 400),
             child: Image.network(

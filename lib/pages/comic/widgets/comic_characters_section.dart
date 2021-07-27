@@ -31,6 +31,7 @@ class ComicCharactersSection extends StatelessWidget {
         ),
         FutureBuilder<MarvelReponseData<Character>>(
           future: service.getComicCharacters(comic.id),
+          // TODO handle offline error
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(child: CircularProgressIndicator());
