@@ -14,13 +14,16 @@ class ComicSummarySection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        CachedNetworkImage(
-          imageUrl: comic.thumbnail,
-          placeholder: (c, s) => Center(child: CircularProgressIndicator()),
-          errorWidget: (c, s, d) => Container(),
-          imageBuilder: (context, imageProvider) => Hero(
-            tag: "thumbnail${comic.id}",
-            child: Container(
+        Hero(
+          tag: "thumbnail${comic.id}",
+          child: CachedNetworkImage(
+            imageUrl: comic.thumbnail,
+            errorWidget: (c, s, d) => Container(),
+            placeholder: (c, s) => Container(
+              height: 400,
+              child: Center(child: CircularProgressIndicator()),
+            ),
+            imageBuilder: (context, imageProvider) => Container(
               height: 400,
               decoration: BoxDecoration(
                 image: DecorationImage(
