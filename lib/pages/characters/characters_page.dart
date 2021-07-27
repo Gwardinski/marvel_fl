@@ -61,15 +61,21 @@ class _CharactersListPageState extends State<CharactersListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Marvel Heroes"),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.list),
-            onPressed: () => _navigateToReadingPage(context),
-          )
-        ],
-        // TODO remove after creating bottom tabs
+      appBar: PreferredSize(
+        child: Hero(
+          tag: AppBar,
+          child: AppBar(
+            title: Text("Marvel Heroes"),
+            actions: [
+              // TODO remove after creating bottom tabs
+              IconButton(
+                icon: Icon(Icons.list),
+                onPressed: () => _navigateToReadingPage(context),
+              )
+            ],
+          ),
+        ),
+        preferredSize: AppBar().preferredSize,
       ),
       body: PagedListView<int, Character>(
         pagingController: _controller,

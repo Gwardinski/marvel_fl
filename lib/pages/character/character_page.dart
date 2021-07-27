@@ -15,8 +15,14 @@ class CharacterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Character"),
+      appBar: PreferredSize(
+        child: Hero(
+          tag: AppBar,
+          child: AppBar(
+            title: Text('Character'),
+          ),
+        ),
+        preferredSize: AppBar().preferredSize,
       ),
       body: Stack(
         children: [

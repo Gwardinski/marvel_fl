@@ -52,27 +52,28 @@ class SavedComicListItem extends StatelessWidget {
       onTap: () => _navigateToComicPage(context),
       child: CachedNetworkImage(
         imageUrl: comic.thumbnail,
-        errorWidget: (c, i, b) => Center(
-          child: Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Text(
-              comic.title,
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 18),
-            ),
-          ),
-        ),
-        imageBuilder: (context, imageProvider) => Hero(
-          tag: "thumbnail${comic.id}",
-          child: Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: imageProvider,
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-        ),
+        placeholder: (c, s) => Center(child: CircularProgressIndicator()),
+        // errorWidget: (c, i, b) => Center(
+        //   child: Padding(
+        //     padding: EdgeInsets.all(8.0),
+        //     child: Text(
+        //       comic.title,
+        //       textAlign: TextAlign.center,
+        //       style: TextStyle(fontSize: 18),
+        //     ),
+        //   ),
+        // ),
+        // imageBuilder: (context, imageProvider) => Hero(
+        //   tag: "thumbnail${comic.id}",
+        //   child: Container(
+        //     decoration: BoxDecoration(
+        //       image: DecorationImage(
+        //         image: imageProvider,
+        //         fit: BoxFit.cover,
+        //       ),
+        //     ),
+        //   ),
+        // ),
       ),
     );
   }

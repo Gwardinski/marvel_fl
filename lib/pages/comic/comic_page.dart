@@ -18,16 +18,22 @@ class ComicPage extends StatelessWidget {
     final comicState = Provider.of<ComicState>(context);
     final isSaved = comicState.isSaved(comic.id);
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Comic"),
-        actions: [
-          IconButton(
-            icon: Icon(isSaved ? Icons.bookmark : Icons.bookmark_outline),
-            onPressed: () {
-              isSaved ? comicState.removeComic(comic.id) : comicState.saveComic(comic);
-            },
+      appBar: PreferredSize(
+        child: Hero(
+          tag: AppBar,
+          child: AppBar(
+            title: Text('Comic'),
+            actions: [
+              IconButton(
+                icon: Icon(isSaved ? Icons.bookmark : Icons.bookmark_outline),
+                onPressed: () {
+                  isSaved ? comicState.removeComic(comic.id) : comicState.saveComic(comic);
+                },
+              ),
+            ],
           ),
-        ],
+        ),
+        preferredSize: AppBar().preferredSize,
       ),
       body: SingleChildScrollView(
         child: Column(
