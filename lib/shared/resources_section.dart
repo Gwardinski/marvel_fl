@@ -10,12 +10,12 @@ class ResourcesSection extends StatelessWidget {
   final List<Resource> resources;
 
   Future<void> _launchURL(String url, context) async {
-    final can = await canLaunch(url);
-    if (can) {
+    try {
       return await launch(url);
+    } catch (e) {
+      final snackBar = SnackBar(content: Text('Could not open URL'));
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
-    final snackBar = SnackBar(content: Text('Could not open URL'));
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   @override

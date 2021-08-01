@@ -30,7 +30,6 @@ class Resource {
 
   static List<Resource> listFromJson(List<dynamic> json) {
     List<Resource> formattedResources = [];
-    print(json);
     if (json.length > 0) {
       formattedResources = json.map((r) => Resource.fromJson(r)).toList();
     }

@@ -23,7 +23,6 @@ class ComicState extends ChangeNotifier {
     } else {
       comicsList = list;
     }
-    print(comicsList);
     notifyListeners();
   }
 
